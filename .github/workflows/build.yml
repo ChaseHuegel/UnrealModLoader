@@ -1,0 +1,49 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows-x64:
+    name: Windows x64 (Release)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v3
+
+      - name: Build solution
+        run: msbuild UnrealEngineModLoader\UnrealEngineModLoader.sln /nologo /m /v:minimal /p:Configuration=Release /p:Platform=x64
+
+      - name: List build output
+        if: always()
+        run: |
+          $out = 'UnrealEngineModLoader\x64\Release'
+          if (Test-Path $out) {
+            Get-ChildItem -Path $out -Recurse -File | Select-Object FullName, Length
+          } else {
+            Write-Host "No output folder at $out"
+          }
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: UnrealModLoader-windows-x64
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            UnrealEngineModLoader/x64/Release/*.dll
+            UnrealEngineModLoader/x64/Release/*.exe
+            UnrealEngineModLoader/x64/Release/*.pdb
+            ModLoaderInfo.ini
