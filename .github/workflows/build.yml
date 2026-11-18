@@ -29,12 +29,20 @@ jobs:
       - name: List build output
         if: always()
         run: |
+          $ErrorActionPreference = 'Stop'
+
+          # The projects use the default IntDir, which is the same folder as OutDir,
+          # so filter out .obj/.tlog/.iobj/.lib and other intermediates.
           $out = 'UnrealEngineModLoader\x64\Release'
           $summary = @('### Build output', '')
 
           if (Test-Path $out) {
             $root = (Resolve-Path $out).Path
-            $files = @(Get-ChildItem -Path $root -Recurse -File | Sort-Object FullName)
+            $files = @(
+              Get-ChildItem -Path $root -Recurse -File |
+                Where-Object { $_.Extension -in '.dll', '.exe', '.pdb' -and $_.Name -notlike 'vc*.pdb' } |
+                Sort-Object FullName
+            )
 
             $summary += '| File | Size (KB) |'
             $summary += '| --- | --- |'
