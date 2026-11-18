@@ -4,6 +4,7 @@
 #include "Utilities/Dumper.h"
 #include "Utilities/Globals.h"
 #include "Utilities/MinHook.h"
+#include "Utilities/UISettings.h"
 #include "Utilities/Version.h"
 
 LoaderUI* LoaderUI::UI;
@@ -19,7 +20,7 @@ LoaderUI* LoaderUI::GetUI()
 
 namespace TickVars
 {
-	bool f1_pressed;
+	bool menuToggleKeyDown;
 	bool bDumpObjects;
 	bool bDumpEngineInfo;
 	bool bDumpWorldActors;
@@ -55,11 +56,11 @@ void UILogicTick()
 {
 	while (true)
 	{
-		if (GetAsyncKeyState(VK_F1) != 0)
-			TickVars::f1_pressed = true;
-		else if (TickVars::f1_pressed)
+		if ((GetAsyncKeyState(UISettings::MenuToggleKey) & 0x8000) != 0)
+			TickVars::menuToggleKeyDown = true;
+		else if (TickVars::menuToggleKeyDown)
 		{
-			TickVars::f1_pressed = false;
+			TickVars::menuToggleKeyDown = false;
 			if (Global::GetGlobals()->bIsMenuOpen)
 			{
 				Global::GetGlobals()->bIsMenuOpen = false;

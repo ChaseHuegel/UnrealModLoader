@@ -5,6 +5,7 @@
 #include <filesystem>
 #include "INI.h"
 #include "Utilities/Pattern.h"
+#include "Utilities/UISettings.h"
 #include "Utilities/Version.h"
 #include "../Hooks.h"
 #include "../UE4/Ue4.hpp"
@@ -54,6 +55,12 @@ void SetupProfile(std::string Path)
 		freopen("CON", "w", LOG_STREAM);
 		Log::Info("Created by ~Russell.J Release V %s", MODLOADER_VERSION);
 	}
+
+	LoaderInfo.select("UI");
+	UISettings::MenuToggleKey = UISettings::ParseVirtualKey(LoaderInfo.get("UI", "MenuKey", "F8"), VK_F8);
+	UISettings::MenuToggleKeyName = UISettings::VirtualKeyName(UISettings::MenuToggleKey);
+	Log::Info("Menu toggle key: %s (0x%X)", UISettings::MenuToggleKeyName.c_str(), UISettings::MenuToggleKey);
+
 	if (std::filesystem::exists(Profile))
 	{
 		GameProfile::SelectedGameProfile.ProfileName = gamename;

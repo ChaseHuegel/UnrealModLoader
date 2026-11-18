@@ -88,6 +88,9 @@
     <ClInclude Include="UnrealEngineModLoader\Utilities\MinHook.h">
       <Filter>UnrealModLoader\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="UnrealEngineModLoader\Utilities\UISettings.h">
+      <Filter>UnrealModLoader\Utilities</Filter>
+    </ClInclude>
     <ClInclude Include="UnrealEngineModLoader\Utilities\Pattern.h">
       <Filter>UnrealModLoader\Utilities</Filter>
     </ClInclude>

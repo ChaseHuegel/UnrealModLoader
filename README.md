@@ -13,7 +13,7 @@ All video documentation and guides can be found [here](https://www.youtube.com/p
 
 # Extra Info
 	* You can enable or disable the mod loader output console via the ini (NOTE: This is not related to the UE4 Console.)
-	* You can press f1 to open the Mod Loader gui panel.
+	* You can press F8 to open the Mod Loader gui panel. This is configurable with MenuKey in the [UI] section of ModLoaderInfo.ini.
 
 # 3rd Party Software
   * [feather-ini-parser](https://github.com/Turbine1991/cpp-feather-ini-parser)
