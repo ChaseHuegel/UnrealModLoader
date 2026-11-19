@@ -76,3 +76,13 @@ jobs:
             UnrealEngineModLoader/x64/Release/*.exe
             UnrealEngineModLoader/x64/Release/*.pdb
             ModLoaderInfo.ini
+
+      - name: Upload loader DLL only
+        uses: actions/upload-artifact@v7
+        with:
+          name: UnrealEngineModLoader-dll-only
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            UnrealEngineModLoader/x64/Release/UnrealEngineModLoader.dll
+            UnrealEngineModLoader/x64/Release/UnrealEngineModLoader.pdb
