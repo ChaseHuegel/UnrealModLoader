@@ -248,9 +248,9 @@ void SetupProfile(std::string Path)
 			}
 
 			auto BeginPlay = Pattern::Find("48 8B D9 E8 ?? ?? ?? ?? F6 83 ?? ?? ?? ?? ?? 74 12 48 8B 03");
-			BeginPlay += 0x3;
 			if (BeginPlay != nullptr)
 			{
+				BeginPlay += 0x3;
 				GameProfile::SelectedGameProfile.BeginPlay = (DWORD64)MEM::GetAddressPTR(BeginPlay, 0x1, 0x5);
 				Log::Info("AActor::BeginPlay: 0x%p", (void*)GameProfile::SelectedGameProfile.BeginPlay);
 			}
@@ -338,9 +338,9 @@ void SetupProfile(std::string Path)
 			Log::Info("CallFunctionByNameWithArguments: 0x%p", (void*)GameProfile::SelectedGameProfile.CallFunctionByNameWithArguments);
 
 			auto ProcessEvent = Pattern::Find("75 0E ? ? ? 48 ? ? 48 ? ? E8 ? ? ? ? 48 8B ? 24 ? 48 8B ? 24 38 48 8B ? 24 40");
-			ProcessEvent += 0xB;
 			if (ProcessEvent != nullptr)
 			{
+				ProcessEvent += 0xB;
 				GameProfile::SelectedGameProfile.ProcessEvent = (DWORD64)MEM::GetAddressPTR(ProcessEvent, 0x1, 0x5);
 				Log::Info("UObject::ProcessEvent: 0x%p", (void*)GameProfile::SelectedGameProfile.ProcessEvent);
 			}
