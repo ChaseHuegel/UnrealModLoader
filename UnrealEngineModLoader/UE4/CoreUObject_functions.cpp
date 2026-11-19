@@ -3,6 +3,7 @@
 #endif
 
 #include "CoreUObject_parameters.hpp"
+#include "Utilities/Logger.h"
 namespace UE4
 {
 	//---------------------------------------------------------------------------
@@ -191,6 +192,11 @@ namespace UE4
 
 	void UObject::ProcessEvent(class UFunction* function, void* parms)
 	{
+		if (!GameProfile::SelectedGameProfile.ProcessEvent)
+		{
+			Log::Error("ProcessEvent Called But Not Found!");
+			return;
+		}
 		return reinterpret_cast<void(*)(UObject*, class UFunction*, void*)>(GameProfile::SelectedGameProfile.ProcessEvent)(this, function, parms);
 	}
 
